@@ -1,6 +1,7 @@
 if (typeof AFRAME === 'undefined') {
   throw new Error('Component attempted to register before AFRAME was available.');
 }
+console.log('HIII FROM HERE!');
 
 // Components.
 require('./components/motion-capture-recorder.js');

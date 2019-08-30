@@ -18,7 +18,6 @@ AFRAME.registerComponent('avatar-recorder', {
   },
 
   init: function () {
-    console.log('HIII FROM RECORDER!');
     this.cameraEl = null;
     this.isRecording = false;
     this.trackedControllerEls = {};
