@@ -47,6 +47,7 @@
 	if (typeof AFRAME === 'undefined') {
 	  throw new Error('Component attempted to register before AFRAME was available.');
 	}
+	console.log('HIII FROM HERE!');
 
 	// Components.
 	__webpack_require__(1);
@@ -536,7 +537,6 @@
 	  },
 
 	  init: function () {
-	    console.log('HIII FROM RECORDER!');
 	    this.cameraEl = null;
 	    this.isRecording = false;
 	    this.trackedControllerEls = {};
