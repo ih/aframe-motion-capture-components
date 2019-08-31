@@ -536,7 +536,7 @@
 	   */
 	  throttledTick: function () {
 	    var self = this;
-	    var trackedControllerEls = this.el.querySelectorAll('[tracked-controls]');
+	    var trackedControllerEls = this.el.querySelectorAll('[oculus-touch-controls]');
 	    this.trackedControllerEls = {};
 	    trackedControllerEls.forEach(function (trackedControllerEl) {
 	      if (!trackedControllerEl.id) {
