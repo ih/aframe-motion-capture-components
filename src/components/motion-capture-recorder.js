@@ -171,8 +171,8 @@ AFRAME.registerComponent('motion-capture-recorder', {
       this.lastTimestamp = time;
       if (!this.data.enabled || !this.isRecording) { return; }
       newPoint = {
-        position: this.el.getAttribute('position'),
-        rotation: this.el.getAttribute('rotation'),
+        position: JSON.parse(JSON.stringify(this.el.getAttribute('position'))),
+        rotation: JSON.parse(JSON.stringify(this.el.getAttribute('rotation'))),
         timestamp: time
       };
       this.recordedPoses.push(newPoint);
