@@ -42,7 +42,7 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	if (typeof AFRAME === 'undefined') {
 	  throw new Error('Component attempted to register before AFRAME was available.');
@@ -59,9 +59,9 @@
 	__webpack_require__(6);
 
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/* global AFRAME, THREE */
 
@@ -116,8 +116,22 @@
 	    var detail;
 	    if (!this.isRecording) { return; }
 
+	    // Filter out `target`, not serializable.
+	    if ('detail' in evt && 'state' in evt.detail && 'target' in evt.detail.state) {
+	      delete evt.detail.state.target;
+	    }
+
 	    detail = {};
 	    EVENTS[evt.type].props.forEach(function buildDetail (propName) {
+	      // Convert GamepadButton to normal JS object.
+	      if (propName === 'state') {
+	        var stateProp;
+	        detail.state = {};
+	        for (stateProp in evt.detail.state) {
+	          detail.state[stateProp] = evt.detail.state[stateProp];
+	        }
+	        return;
+	      }
 	      detail[propName] = evt.detail[propName];
 	    });
 
@@ -270,9 +284,9 @@
 	});
 
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/* global THREE, AFRAME  */
 	AFRAME.registerComponent('motion-capture-replayer', {
@@ -464,9 +478,9 @@
 	};
 
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/* global THREE, AFRAME  */
 	var log = AFRAME.utils.debug('aframe-motion-capture:avatar-recorder:info');
@@ -751,9 +765,9 @@
 	});
 
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/* global THREE, AFRAME  */
 	var error = AFRAME.utils.debug('aframe-motion-capture:avatar-replayer:error');
@@ -1000,9 +1014,9 @@
 	});
 
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/* global THREE AFRAME  */
 	AFRAME.registerComponent('stroke', {
@@ -1185,9 +1199,9 @@
 	});
 
 
-/***/ },
+/***/ }),
 /* 6 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	AFRAME.registerSystem('motion-capture-replayer', {
 	  init: function () {
@@ -1223,5 +1237,5 @@
 	  }
 	});
 
-/***/ }
+/***/ })
 /******/ ]);
