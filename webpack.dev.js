@@ -6,9 +6,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  devServer: {
-    disableHostCheck: true
-  },
   entry: './src/index.js',
   output: {
     path: __dirname,

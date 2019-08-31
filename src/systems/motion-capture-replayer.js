@@ -1,35 +1,13 @@
 AFRAME.registerSystem('motion-capture-replayer', {
   init: function () {
     var sceneEl = this.sceneEl;
-    var trackedControlsComponent;
-    var trackedControlsSystem;
-    var trackedControlsTick;
-
-    trackedControlsSystem = sceneEl.systems['tracked-controls'];
-    trackedControlsTick = AFRAME.components['tracked-controls'].Component.prototype.tick;
-
-    // Gamepad data stored in recording and added here by `motion-capture-replayer` component.
+    var trackedControlsSystem = sceneEl.systems['tracked-controls'];
+    var trackedControlsTick = AFRAME.components['tracked-controls'].Component.prototype.tick;
     this.gamepads = [];
-
-    // Wrap `updateControllerList`.
-    this.updateControllerListOriginal = trackedControlsSystem.updateControllerList.bind(
-      trackedControlsSystem);
-    this.throttledUpdateControllerListOriginal = trackedControlsSystem.throttledUpdateControllerList
-    trackedControlsSystem.throttledUpdateControllerList = this.updateControllerList.bind(this);
-
-    // Wrap `tracked-controls` tick.
-    trackedControlsComponent = AFRAME.components['tracked-controls'].Component.prototype;
-    trackedControlsComponent.tick = this.trackedControlsTickWrapper;
-    trackedControlsComponent.trackedControlsTick = trackedControlsTick;
-  },
-
-  remove: function () {
-    // restore modified objects
-    var trackedControlsComponent = AFRAME.components['tracked-controls'].Component.prototype;
-    var trackedControlsSystem = this.sceneEl.systems['tracked-controls'];
-    trackedControlsComponent.tick = trackedControlsComponent.trackedControlsTick;
-    delete trackedControlsComponent.trackedControlsTick;
-    trackedControlsSystem.throttledUpdateControllerList = this.throttledUpdateControllerListOriginal;
+    this.updateControllerListOriginal = trackedControlsSystem.updateControllerList.bind(trackedControlsSystem);
+    sceneEl.systems['tracked-controls'].updateControllerList = this.updateControllerList.bind(this);
+    AFRAME.components['tracked-controls'].Component.prototype.tick = this.trackedControlsTickWrapper;
+    AFRAME.components['tracked-controls'].Component.prototype.trackedControlsTick = trackedControlsTick;
   },
 
   trackedControlsTickWrapper: function (time, delta) {
@@ -37,24 +15,19 @@ AFRAME.registerSystem('motion-capture-replayer', {
     this.trackedControlsTick(time, delta);
   },
 
-  /**
-   * Wrap `updateControllerList` to stub in the gamepads and emit `controllersupdated`.
-   */
-  updateControllerList: function (gamepads) {
-    var i;
+  updateControllerList: function () {
     var sceneEl = this.sceneEl;
+    var i;
     var trackedControlsSystem = sceneEl.systems['tracked-controls'];
-    gamepads = gamepads || []
-    // convert from read-only GamepadList
-    gamepads = Array.from(gamepads)
-
+    this.updateControllerListOriginal();
     this.gamepads.forEach(function (gamepad) {
-      if (gamepads[gamepad.index]) { return; }
-      // to pass check in updateControllerListOriginal
-      gamepad.pose = true;
-      gamepads[gamepad.index] = gamepad;
+      if (trackedControlsSystem.controllers[gamepad.index]) { return; }
+      trackedControlsSystem.controllers[gamepad.index] = gamepad;
     });
-
-    this.updateControllerListOriginal(gamepads);
+    for (i = 0; i < trackedControlsSystem.controllers.length; ++i) {
+      if (!trackedControlsSystem.controllers[i]) {
+        trackedControlsSystem.controllers[i] = {id: '___', index: -1, hand: 'finger'};
+      }
+    }
   }
 });

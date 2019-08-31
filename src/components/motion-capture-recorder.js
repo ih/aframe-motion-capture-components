@@ -1,7 +1,7 @@
 /* global AFRAME, THREE */
 
 var EVENTS = {
-  axismove: {id: 0, props: ['id', 'axis', 'changed']},
+  axismove: {id: 0, props: ['id', 'axis']},
   buttonchanged: {id: 1, props: ['id', 'state']},
   buttondown: {id: 2, props: ['id', 'state']},
   buttonup: {id: 3, props: ['id', 'state']},
@@ -52,8 +52,7 @@ AFRAME.registerComponent('motion-capture-recorder', {
     if (!this.isRecording) { return; }
 
     // Filter out `target`, not serializable.
-    if ('detail' in evt && 'state' in evt.detail && typeof evt.detail.state === 'object' &&
-        'target' in evt.detail.state) {
+    if ('detail' in evt && 'state' in evt.detail && 'target' in evt.detail.state) {
       delete evt.detail.state.target;
     }
 
@@ -172,8 +171,8 @@ AFRAME.registerComponent('motion-capture-recorder', {
       this.lastTimestamp = time;
       if (!this.data.enabled || !this.isRecording) { return; }
       newPoint = {
-        position: AFRAME.utils.clone(this.el.getAttribute('position')),
-        rotation: AFRAME.utils.clone(this.el.getAttribute('rotation')),
+        position: this.el.getAttribute('position'),
+        rotation: this.el.getAttribute('rotation'),
         timestamp: time
       };
       this.recordedPoses.push(newPoint);
