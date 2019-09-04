@@ -45,6 +45,14 @@ AFRAME.registerComponent('motion-capture-recorder', {
     el.addEventListener('buttondown', this.recordEvent);
     el.addEventListener('touchstart', this.recordEvent);
     el.addEventListener('touchend', this.recordEvent);
+    el.addEventListener('triggerup', this.recordEvent);
+    el.addEventListener('triggerdown', this.recordEvent);
+    el.addEventListener('menudown', this.recordEvent);
+    el.addEventListener('menuup', this.recordEvent);
+    el.addEventListener('gripup', this.recordEvent);
+    el.addEventListener('gripdown', this.recordEvent);
+    el.addEventListener('abuttondown', this.recordEvent);
+    el.addEventListener('abuttonup', this.recordEvent);
   },
 
   recordEvent: function (evt) {
