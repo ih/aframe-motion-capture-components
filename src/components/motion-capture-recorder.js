@@ -6,7 +6,15 @@ var EVENTS = {
   buttondown: {id: 2, props: ['id', 'state']},
   buttonup: {id: 3, props: ['id', 'state']},
   touchstart: {id: 4, props: ['id', 'state']},
-  touchend: {id: 5, props: ['id', 'state']}
+  touchend: {id: 5, props: ['id', 'state']},
+  triggerup: {id: 6, props: []},
+  triggerdown: {id: 7, props: []},
+  menudown: {id: 8, props: []},
+  menuup: {id: 9, props: []},
+  gripup: {id: 10, props: []},
+  gripdown: {id: 11, props: []},
+  abuttondown: {id: 12, props: []},
+  abuttonup: {id: 13, props: []},
 };
 
 var EVENTS_DECODE = {
@@ -15,7 +23,15 @@ var EVENTS_DECODE = {
   2: 'buttondown',
   3: 'buttonup',
   4: 'touchstart',
-  5: 'touchend'
+  5: 'touchend',
+  6: 'triggerup',
+  7: 'triggerdown',
+  8: 'menudown',
+  9: 'menuup',
+  10: 'gripup',
+  11: 'gripdown',
+  12: 'abuttondown',
+  13: 'abuttonup',
 };
 
 AFRAME.registerComponent('motion-capture-recorder', {
@@ -63,6 +79,7 @@ AFRAME.registerComponent('motion-capture-recorder', {
     if ('detail' in evt && evt.detail !== null && 'state' in evt.detail && 'target' in evt.detail.state) {
       delete evt.detail.state.target;
     }
+
 
     detail = {};
     EVENTS[evt.type].props.forEach(function buildDetail (propName) {
