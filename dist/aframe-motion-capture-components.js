@@ -589,6 +589,9 @@
 	      }, 500);
 	    }
 	    window.addEventListener('keydown', this.onKeyDown);
+	    trackedControllerEls.forEach((trackedControllerEl) => {
+	      trackedControllerEl.addEventListener('bbuttondown', this.toggleRecording);
+	    })
 	  },
 
 	  pause: function () {
