@@ -1234,13 +1234,13 @@
 	AFRAME.registerSystem('motion-capture-replayer', {
 	  init: function () {
 	    var sceneEl = this.sceneEl;
-	    var trackedControlsSystem = sceneEl.systems['tracked-controls'];
-	    var trackedControlsTick = AFRAME.components['tracked-controls'].Component.prototype.tick;
+	    var trackedControlsSystem = sceneEl.systems['tracked-controls-webvr'];
+	    var trackedControlsTick = AFRAME.components['tracked-controls-webvr'].Component.prototype.tick;
 	    this.gamepads = [];
 	    this.updateControllerListOriginal = trackedControlsSystem.updateControllerList.bind(trackedControlsSystem);
-	    sceneEl.systems['tracked-controls'].updateControllerList = this.updateControllerList.bind(this);
-	    AFRAME.components['tracked-controls'].Component.prototype.tick = this.trackedControlsTickWrapper;
-	    AFRAME.components['tracked-controls'].Component.prototype.trackedControlsTick = trackedControlsTick;
+	    sceneEl.systems['tracked-controls-webvr'].updateControllerList = this.updateControllerList.bind(this);
+	    AFRAME.components['tracked-controls-webvr'].Component.prototype.tick = this.trackedControlsTickWrapper;
+	    AFRAME.components['tracked-controls-webvr'].Component.prototype.trackedControlsTick = trackedControlsTick;
 	  },
 
 	  trackedControlsTickWrapper: function (time, delta) {
@@ -1251,7 +1251,7 @@
 	  updateControllerList: function () {
 	    var sceneEl = this.sceneEl;
 	    var i;
-	    var trackedControlsSystem = sceneEl.systems['tracked-controls'];
+	    var trackedControlsSystem = sceneEl.systems['tracked-controls-webvr'];
 	    this.updateControllerListOriginal();
 	    this.gamepads.forEach(function (gamepad) {
 	      if (trackedControlsSystem.controllers[gamepad.index]) { return; }
