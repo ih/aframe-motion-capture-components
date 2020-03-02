@@ -57,7 +57,7 @@
 
 	// Systems
 	__webpack_require__(6);
-
+	console.log('hello');
 
 /***/ }),
 /* 1 */
@@ -524,7 +524,8 @@
 	    spectatorPosition: {default: '0 1.6 0', type: 'vec3'},
 	    localStorage: {default: true},
 	    saveFile: {default: true},
-	    loop: {default: true}
+	    loop: {default: true},
+	    secretKey: {default: ''}
 	  },
 
 	  init: function () {
@@ -769,8 +770,10 @@
 
 	    log('Uploading recording to myjson.com.');
 	    request = new XMLHttpRequest();
-	    request.open('POST', 'https://api.myjson.com/bins', true);
+	    request.open('POST', 'https://api.jsonbin.io/b', true);
 	    request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+	    request.setRequestHeader("secret-key", this.data.secretKey);
+	    request.setRequestHeader('private', 'false');
 	    request.onload = function () {
 	      var aEl;
 	      var url = JSON.parse(this.responseText).uri;
