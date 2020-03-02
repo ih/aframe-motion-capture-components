@@ -11,3 +11,4 @@ require('./components/stroke.js');
 
 // Systems
 require('./systems/motion-capture-replayer.js');
+console.log('hello');
