@@ -15,6 +15,12 @@ var EVENTS = {
   gripdown: {id: 11, props: []},
   abuttondown: {id: 12, props: []},
   abuttonup: {id: 13, props: []},
+  bbuttondown: {id: 14, props: []},
+  bbuttonup: {id: 15, props: []},
+  xbuttondown: {id: 16, props: []},
+  xbuttonup: {id: 17, props: []},
+  ybuttondown: {id: 18, props: []},
+  ybuttonup: {id: 19, props: []},
 };
 
 var EVENTS_DECODE = {
@@ -32,6 +38,12 @@ var EVENTS_DECODE = {
   11: 'gripdown',
   12: 'abuttondown',
   13: 'abuttonup',
+  14: 'bbuttondown',
+  15: 'bbuttonup',
+  16: 'xbuttondown',
+  17: 'xbuttonup',
+  18: 'ybuttondown',
+  19: 'ybuttonup',
 };
 
 AFRAME.registerComponent('motion-capture-recorder', {
@@ -69,6 +81,12 @@ AFRAME.registerComponent('motion-capture-recorder', {
     el.addEventListener('gripdown', this.recordEvent);
     el.addEventListener('abuttondown', this.recordEvent);
     el.addEventListener('abuttonup', this.recordEvent);
+    el.addEventListener('bbuttondown', this.recordEvent);
+    el.addEventListener('bbuttonup', this.recordEvent);
+    el.addEventListener('xbuttondown', this.recordEvent);
+    el.addEventListener('xbuttonup', this.recordEvent);
+    el.addEventListener('ybuttondown', this.recordEvent);
+    el.addEventListener('ybuttonup', this.recordEvent);
   },
 
   recordEvent: function (evt) {
